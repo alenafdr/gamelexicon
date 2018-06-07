@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+                   http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="Alena" id="1528349781418-1">
+        <createTable tableName="games">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="lang_answer_id" type="BIGINT"/>
+            <column name="lang_question_id" type="BIGINT"/>
+            <column name="user_id" type="BIGINT"/>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="create_timestamp" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Alena" id="1528349781418-2">
+        <createTable tableName="languages">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Alena" id="1528349781418-3">
+        <createTable tableName="roles">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Alena" id="1528349781418-4">
+        <createTable tableName="settings">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="amount_repeat" type="INT"/>
+            <column name="amount_steps" type="INT"/>
+            <column name="sec_for_answer" type="INT"/>
+            <column name="lang_answer_id" type="BIGINT"/>
+            <column name="lang_question_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Alena" id="1528349781418-5">
+        <createTable tableName="steps">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="result_answer" type="BIT(1)"/>
+            <column name="game_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="word_question_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="word_right_answer_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="time_give" type="TIMESTAMP"/>
+            <column name="time_received" type="TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Alena" id="1528349781418-6">
+        <createTable tableName="translations">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="id_word_origin" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Alena" id="1528349781418-7">
+        <createTable tableName="user_role">
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Alena" id="1528349781418-8">
+        <createTable tableName="users">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="email" type="VARCHAR(255)"/>
+            <column name="first_name" type="VARCHAR(255)"/>
+            <column name="last_name" type="VARCHAR(255)"/>
+            <column name="password" type="VARCHAR(255)"/>
+            <column name="token" type="VARCHAR(255)"/>
+            <column name="setting_id" type="BIGINT"/>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="registration_timestamp" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Alena" id="1528349781418-9">
+        <createTable tableName="word_origin_translation">
+            <column name="origin_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="translation_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Alena" id="1528349781418-10">
+        <createTable tableName="words">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="lang_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Alena" id="1528349781418-11">
+        <addPrimaryKey columnNames="user_id, role_id" constraintName="PRIMARY" tableName="user_role"/>
+    </changeSet>
+    <changeSet author="Alena" id="1528349781418-12">
+        <addPrimaryKey columnNames="origin_id, translation_id" constraintName="PRIMARY" tableName="word_origin_translation"/>
+    </changeSet>
+    <changeSet author="Alena" id="1528349781418-13">
+        <createIndex indexName="FK5ly18ggi3b1hdb66mb4p3v6r3" tableName="games">
+            <column name="user_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Alena" id="1528349781418-14">
+        <createIndex indexName="FK92lx5os7i20opqth9hr60htqy" tableName="translations">
+            <column name="id_word_origin"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Alena" id="1528349781418-15">
+        <createIndex indexName="FKha1494lob0yjxoi9nni7g7itv" tableName="users">
+            <column name="setting_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Alena" id="1528349781418-16">
+        <createIndex indexName="FKjphvleal05micxw3luxgjy2pf" tableName="word_origin_translation">
+            <column name="translation_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Alena" id="1528349781418-17">
+        <createIndex indexName="FKt7e7djp752sqn6w22i6ocqy6q" tableName="user_role">
+            <column name="role_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Alena" id="1528349781418-18">
+        <createIndex indexName="game_id_step" tableName="steps">
+            <column name="game_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Alena" id="1528349781418-19">
+        <createIndex indexName="lang_answer_id_game" tableName="games">
+            <column name="lang_answer_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Alena" id="1528349781418-20">
+        <createIndex indexName="lang_answer_id_settings" tableName="settings">
+            <column name="lang_answer_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Alena" id="1528349781418-21">
+        <createIndex indexName="lang_id_word" tableName="words">
+            <column name="lang_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Alena" id="1528349781418-22">
+        <createIndex indexName="lang_question_id_game" tableName="games">
+            <column name="lang_question_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Alena" id="1528349781418-23">
+        <createIndex indexName="lang_question_id_settings" tableName="settings">
+            <column name="lang_question_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Alena" id="1528349781418-24">
+        <createIndex indexName="word_question_id_step" tableName="steps">
+            <column name="word_question_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Alena" id="1528349781418-25">
+        <createIndex indexName="word_right_answer_step" tableName="steps">
+            <column name="word_right_answer_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Alena" id="1528349781418-26">
+        <addForeignKeyConstraint baseColumnNames="origin_id" baseTableName="word_origin_translation" constraintName="FK3sldl3amhu3dpxhvjeyffu3q6" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE" referencedColumnNames="id" referencedTableName="translations"/>
+    </changeSet>
+    <changeSet author="Alena" id="1528349781418-27">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="games" constraintName="FK5ly18ggi3b1hdb66mb4p3v6r3" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"/>
+    </changeSet>
+    <changeSet author="Alena" id="1528349781418-28">
+        <addForeignKeyConstraint baseColumnNames="id_word_origin" baseTableName="translations" constraintName="FK92lx5os7i20opqth9hr60htqy" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE" referencedColumnNames="id" referencedTableName="words"/>
+    </changeSet>
+    <changeSet author="Alena" id="1528349781418-29">
+        <addForeignKeyConstraint baseColumnNames="setting_id" baseTableName="users" constraintName="FKha1494lob0yjxoi9nni7g7itv" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="settings"/>
+    </changeSet>
+    <changeSet author="Alena" id="1528349781418-30">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="user_role" constraintName="FKj345gk1bovqvfame88rcx7yyx" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users"/>
+    </changeSet>
+    <changeSet author="Alena" id="1528349781418-31">
+        <addForeignKeyConstraint baseColumnNames="translation_id" baseTableName="word_origin_translation" constraintName="FKjphvleal05micxw3luxgjy2pf" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE" referencedColumnNames="id" referencedTableName="words"/>
+    </changeSet>
+    <changeSet author="Alena" id="1528349781418-32">
+        <addForeignKeyConstraint baseColumnNames="role_id" baseTableName="user_role" constraintName="FKt7e7djp752sqn6w22i6ocqy6q" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="roles"/>
+    </changeSet>
+    <changeSet author="Alena" id="1528349781418-33">
+        <addForeignKeyConstraint baseColumnNames="game_id" baseTableName="steps" constraintName="game_id_step" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="games"/>
+    </changeSet>
+    <changeSet author="Alena" id="1528349781418-34">
+        <addForeignKeyConstraint baseColumnNames="lang_answer_id" baseTableName="games" constraintName="lang_answer_id_game" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="languages"/>
+    </changeSet>
+    <changeSet author="Alena" id="1528349781418-35">
+        <addForeignKeyConstraint baseColumnNames="lang_answer_id" baseTableName="settings" constraintName="lang_answer_id_settings" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="languages"/>
+    </changeSet>
+    <changeSet author="Alena" id="1528349781418-36">
+        <addForeignKeyConstraint baseColumnNames="lang_id" baseTableName="words" constraintName="lang_id_word" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE" referencedColumnNames="id" referencedTableName="languages"/>
+    </changeSet>
+    <changeSet author="Alena" id="1528349781418-37">
+        <addForeignKeyConstraint baseColumnNames="lang_question_id" baseTableName="games" constraintName="lang_question_id_game" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="languages"/>
+    </changeSet>
+    <changeSet author="Alena" id="1528349781418-38">
+        <addForeignKeyConstraint baseColumnNames="lang_question_id" baseTableName="settings" constraintName="lang_question_id_settings" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="languages"/>
+    </changeSet>
+    <changeSet author="Alena" id="1528349781418-39">
+        <addForeignKeyConstraint baseColumnNames="word_question_id" baseTableName="steps" constraintName="word_question_id_step" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE" referencedColumnNames="id" referencedTableName="words"/>
+    </changeSet>
+    <changeSet author="Alena" id="1528349781418-40">
+        <addForeignKeyConstraint baseColumnNames="word_right_answer_id" baseTableName="steps" constraintName="word_right_answer_step" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE" referencedColumnNames="id" referencedTableName="words"/>
+    </changeSet>
+</databaseChangeLog>
