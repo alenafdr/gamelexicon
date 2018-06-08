@@ -40,7 +40,7 @@ public class JacksonGameDeserializer extends StdDeserializer<Game> {
 	public Game deserialize(JsonParser parser, DeserializationContext context) throws IOException, JsonProcessingException {
 		JsonNode node = parser.getCodec().readTree(parser);
 		Game game = new Game();
-		game.setId(node.get("id").asLong());
+		game.setId(node.get("gameId").asLong());
 		return game;
 	}
 

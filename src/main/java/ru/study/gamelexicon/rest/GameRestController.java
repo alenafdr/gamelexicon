@@ -8,10 +8,12 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.study.gamelexicon.model.Game;
+import ru.study.gamelexicon.model.Role;
 import ru.study.gamelexicon.model.User;
 import ru.study.gamelexicon.service.GameService;
 import ru.study.gamelexicon.service.UserService;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
@@ -29,8 +31,18 @@ public class GameRestController {
     UserService userService;
 
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<List<Game>> list() {
-        List<Game> games = this.gameService.list();
+    public ResponseEntity<List<Game>> list(ServletRequest servletRequest) {
+        HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+        String header = httpServletRequest.getHeader("X-Auth-Token");
+
+        User user = userService.findByToken(header);
+        List<Game> games;
+
+        if (user.getRoles().contains(new Role("ROLE_ADMIN"))){
+            games = this.gameService.list();
+        } else {
+            games = this.gameService.listByUserId(user.getId());
+        }
 
         if (games.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

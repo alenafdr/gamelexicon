@@ -7,11 +7,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.study.gamelexicon.model.Role;
 import ru.study.gamelexicon.model.Step;
+import ru.study.gamelexicon.model.User;
 import ru.study.gamelexicon.model.Word;
 import ru.study.gamelexicon.service.StepService;
+import ru.study.gamelexicon.service.UserService;
 import ru.study.gamelexicon.service.WordService;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -27,9 +32,25 @@ public class StepRestController {
     @Autowired
     WordService wordService;
 
+    @Autowired
+    UserService userService;
+
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<List<Step>> list(){
-        List<Step> steps = this.stepService.list();
+    public ResponseEntity<List<Step>> list(ServletRequest servletRequest){
+        HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+        String header = httpServletRequest.getHeader("X-Auth-Token");
+
+        User user = userService.findByToken(header);
+
+        List<Step> steps;
+
+        if (user.getRoles().contains(new Role("ROLE_ADMIN"))){
+            steps = this.stepService.list();
+        } else {
+            steps = this.stepService.listByUserId(user.getId());
+        }
+
+
 
         if (steps.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

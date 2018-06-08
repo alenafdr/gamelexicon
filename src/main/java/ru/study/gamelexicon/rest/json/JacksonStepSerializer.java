@@ -26,7 +26,7 @@ public class JacksonStepSerializer extends StdSerializer<Step> {
         } else {
             jsonGenerator.writeNumberField("id", step.getId());
         }
-            jsonGenerator.writeObjectFieldStart("wordQuestion"); //wordQuestion
+            jsonGenerator.writeObjectFieldStart("word_question"); //wordQuestion
             jsonGenerator.writeNumberField("id", step.getWordQuestion().getId());
             jsonGenerator.writeStringField("name", step.getWordQuestion().getName());
             jsonGenerator.writeEndObject(); //wordQuestion

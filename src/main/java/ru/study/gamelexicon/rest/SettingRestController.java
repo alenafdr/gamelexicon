@@ -7,9 +7,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.study.gamelexicon.model.Role;
 import ru.study.gamelexicon.model.Setting;
+import ru.study.gamelexicon.model.User;
 import ru.study.gamelexicon.service.SettingService;
+import ru.study.gamelexicon.service.UserService;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -22,15 +27,21 @@ public class SettingRestController {
     @Autowired
     SettingService settingService;
 
-    @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<List<Setting>> list(){
-        List<Setting> settings = this.settingService.list();
+    @Autowired
+    UserService userService;
 
-        if (settings.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<List<Setting>> list(ServletRequest servletRequest){
+        HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+        String header = httpServletRequest.getHeader("X-Auth-Token");
+        User user = userService.findByToken(header);
+
+        if (user.getRoles().contains(new Role("ROLE_ADMIN"))){
+            List<Setting> settings = this.settingService.list();
+            return new ResponseEntity<>(settings, HttpStatus.OK);
         }
 
-        return new ResponseEntity<>(settings, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -50,7 +61,7 @@ public class SettingRestController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        Setting setting = this.settingService.getById(id);
+        Setting setting = this.settingService.getByUserId(id);
 
         if (setting == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

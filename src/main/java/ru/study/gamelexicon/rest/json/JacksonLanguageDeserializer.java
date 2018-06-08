@@ -21,44 +21,30 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import ru.study.gamelexicon.model.Game;
-import ru.study.gamelexicon.model.Step;
-import ru.study.gamelexicon.model.Word;
+import ru.study.gamelexicon.model.Language;
 
 import java.io.IOException;
 
 
-public class JacksonStepDeserializer extends StdDeserializer<Step> {
+public class JacksonLanguageDeserializer extends StdDeserializer<Language> {
 
-	public JacksonStepDeserializer(){
+	public JacksonLanguageDeserializer(){
 		this(null);
 	}
 
-	public JacksonStepDeserializer(Class<Step> t) {
+	public JacksonLanguageDeserializer(Class<Language> t) {
 		super(t);
 	}
 
 	@Override
-	public Step deserialize(JsonParser parser, DeserializationContext context) throws IOException, JsonProcessingException {
+	public Language deserialize(JsonParser parser, DeserializationContext context) throws IOException, JsonProcessingException {
 		JsonNode node = parser.getCodec().readTree(parser);
-		JsonNode word_question_node = node.get("word_question");
-		JsonNode word_answer_node = node.get("word_answer");
-		Long id = node.get("id").asLong();
-		Step step = new Step();
-		Word wordQuestion = new Word();
-		Word wordAnswer = new Word();
+		Language language = new Language();
 
-		wordQuestion.setId(word_question_node.get("id").asLong());
-		wordQuestion.setName(word_question_node.get("name").asText());
+		language.setId(node.get("id").asLong());
+		language.setName(node.get("name").asText());
 
-		wordAnswer.setId(word_answer_node.get("id").asLong());
-		wordAnswer.setName(word_answer_node.get("name").asText());
-
-		step.setId(id);
-		step.setWordQuestion(wordQuestion);
-		step.setAnswer(wordAnswer);
-		step.setGame(new Game());
-		return step;
+		return language;
 	}
 
 }

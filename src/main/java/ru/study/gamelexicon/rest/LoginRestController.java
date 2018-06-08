@@ -8,7 +8,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import ru.study.gamelexicon.model.Game;
 import ru.study.gamelexicon.model.User;
 import ru.study.gamelexicon.service.GameService;
@@ -17,7 +20,6 @@ import ru.study.gamelexicon.service.UserService;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import java.util.Date;
 
 @RestController
@@ -40,19 +42,21 @@ public class LoginRestController {
         return new ResponseEntity<Game>(gameService.getById(20L), HttpStatus.OK);
     }
 
-    @GetMapping("/test")
-    public ResponseEntity <User> test() {
-        User user = userService.getById(3L);
-        return new ResponseEntity<User>(user, HttpStatus.OK);
-    }
-
     @PostMapping("/registration")
-    public ResponseEntity<String> registration(@RequestBody @Valid User user){
+    public ResponseEntity<String> registration(@RequestParam("login") String email,
+                                               @RequestParam("password") String password,
+                                               @RequestParam("first_name") String firstName,
+                                               @RequestParam("last_name") String lastName){
 
-        if (userService.findByEmail(user.getEmail()) != null){
+        if (userService.findByEmail(email) != null){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
+        User user = new User();
+        user.setEmail(email);
+        user. setPassword(password);
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
         String jwtToken = getToken(user.getEmail());
         user.setToken(jwtToken);
         userService.save(user);

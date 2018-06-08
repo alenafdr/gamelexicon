@@ -12,4 +12,5 @@ public interface SettingService {
     Setting getById(Long id);
     Setting getDefaultSettings();
     Integer getSecForAnswerByStep(Long stepId);
+    Setting getByUserId(Long id);
 }

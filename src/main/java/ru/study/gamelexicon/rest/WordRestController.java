@@ -7,9 +7,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.study.gamelexicon.model.Role;
+import ru.study.gamelexicon.model.User;
 import ru.study.gamelexicon.model.Word;
+import ru.study.gamelexicon.service.UserService;
 import ru.study.gamelexicon.service.WordService;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -22,16 +27,21 @@ public class WordRestController {
     @Autowired
     WordService wordService;
 
-    @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<List<Word>> list() {
-        List<Word> words = this.wordService.list();
+    @Autowired
+    UserService userService;
 
-        if (words.isEmpty()) {
-            logger.debug(words.toString());
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<List<Word>> list(ServletRequest servletRequest) {
+        HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+        String header = httpServletRequest.getHeader("X-Auth-Token");
+        User user = userService.findByToken(header);
+
+        if (user.getRoles().contains(new Role("ROLE_ADMIN"))){
+            List<Word> words = this.wordService.list();
+            return new ResponseEntity<>(words, HttpStatus.OK);
         }
 
-        return new ResponseEntity<>(words, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

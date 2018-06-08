@@ -1,10 +1,17 @@
 package ru.study.gamelexicon.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import ru.study.gamelexicon.rest.json.JacksonLanguageDeserializer;
+import ru.study.gamelexicon.rest.json.JacksonLanguageSerializer;
+
 import javax.persistence.*;
 
 
 @Entity
 @Table(name = "languages")
+@JsonSerialize(using = JacksonLanguageSerializer.class)
+@JsonDeserialize(using = JacksonLanguageDeserializer.class)
 public class Language {
 
     @Id

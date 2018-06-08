@@ -63,6 +63,11 @@ public class SettingServiceImpl implements SettingService {
         return setting;
     }
 
+    @Override
+    public Setting getByUserId(Long id) {
+        return settingDao.getByUserId(id);
+    }
+
     //for tests
     public void setLanguageDao(LanguageDao languageDao) {
         this.languageDao = languageDao;

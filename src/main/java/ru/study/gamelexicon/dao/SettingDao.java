@@ -14,4 +14,11 @@ public interface SettingDao extends JpaRepository<Setting, Long> {
             "INNER JOIN settings ON users.setting_id = settings.id " +
             "WHERE steps.id = :id")
     public Integer getSecForAnswerByStep(@Param("id") Long id);
+
+    @Query(nativeQuery = true,
+    value = "SELECT settings.* \n" +
+            "FROM settings \n" +
+            "INNER JOIN users ON users.setting_id = settings.id\n" +
+            "WHERE users.id = :id")
+    public Setting getByUserId(@Param("id") Long id);
 }

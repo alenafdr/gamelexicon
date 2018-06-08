@@ -82,6 +82,11 @@ public class GameServiceImpl implements GameService {
         return gameDao.getOne(id);
     }
 
+    @Override
+    @Transactional
+    public List<Game> listByUserId(Long id) {
+        return gameDao.getByUserId(id);
+    }
 
     //for tests
     public void setGameDao(GameDao gameDao) {

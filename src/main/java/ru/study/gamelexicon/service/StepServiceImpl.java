@@ -77,6 +77,11 @@ public class StepServiceImpl implements StepService {
         return step;
     }
 
+    @Override
+    public List<Step> listByUserId(Long id) {
+        return stepDao.getListByUserId(id);
+    }
+
     //for tests
     public void setStepDao(StepDao stepDao) {
         this.stepDao = stepDao;

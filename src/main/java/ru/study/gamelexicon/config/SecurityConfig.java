@@ -65,9 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/",
                         "/api/steps/**",
                         "/api/settings/**",
-                        "/api/languages/**",
-                        "/api/statistic/**",
-                        "/api/words/**")
+                        "/api/statistic/**")
                ;
     }
 

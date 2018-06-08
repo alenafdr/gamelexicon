@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.study.gamelexicon.model.User;
 import ru.study.gamelexicon.service.UserService;
@@ -47,7 +46,7 @@ public class UserRestController {
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
-    @PostAuthorize("hasRole('ROLE_ADMIN')")
+
     @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<User> read(@PathVariable("id") Long id, HttpServletRequest request){
 

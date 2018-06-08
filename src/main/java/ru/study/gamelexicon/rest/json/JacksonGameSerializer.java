@@ -26,8 +26,8 @@ public class JacksonGameSerializer extends StdSerializer<Game> {
         } else {
             jsonGenerator.writeNumberField("gameId", game.getId());
         }
-        jsonGenerator.writeStringField("language question", game.getLangWordQuestion().getName());
-        jsonGenerator.writeStringField("language answer", game.getLangWordAnswer().getName());
+        jsonGenerator.writeStringField("language_question", game.getLangWordQuestion().getName());
+        jsonGenerator.writeStringField("language_answer", game.getLangWordAnswer().getName());
 
         jsonGenerator.writeArrayFieldStart("steps");
         for (Step step : game.getSteps()){

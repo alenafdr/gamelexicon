@@ -10,4 +10,5 @@ public interface StepService {
     void update(Step step);
     void remove(Long id);
     Step getById(Long id);
+    List<Step> listByUserId(Long id);
 }

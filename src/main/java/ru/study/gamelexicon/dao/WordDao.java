@@ -37,22 +37,22 @@ public interface WordDao extends JpaRepository<Word, Long> {
                                        @Param("limit") int limit);
 
     @Query(nativeQuery = true,
-    value = "SELECT id, w_name, lang_id, l_id, l_name, AVG(diff) AS avg " +
-            "FROM (SELECT TIMESTAMPDIFF(SECOND, steps.time_give ,steps.time_received) AS diff,  " +
-                    "words.id AS id,  " +
-                    "words.name AS w_name,  " +
-                    "words.lang_id AS lang_id,  " +
-                    "languages.id AS l_id,  " +
-                    "languages.name AS l_name " +
-                    "FROM users " +
-                    "INNER JOIN games ON users.id = games.user_id " +
-                    "INNER JOIN steps ON games.id = steps.game_id " +
-                    "INNER JOIN words ON steps.word_question_id = words.id " +
-                    "INNER JOIN languages ON words.lang_id = languages.id " +
-                    "WHERE users.id = :userId AND steps.time_give IS NOT NULL AND steps.time_received IS NOT NULL) as a " +
-            "GROUP BY id, w_name, lang_id, l_id, l_name " +
-            "ORDER BY avg " +
-            "LIMIT :limit")
+    value = "SELECT id, name, lang_id, l_id, l_name, AVG(diff) AS avg \n" +
+            "            FROM (SELECT TIMESTAMPDIFF(SECOND, steps.time_give ,steps.time_received) AS diff,  \n" +
+            "                    words.id AS id,  \n" +
+            "                    words.name AS name,  \n" +
+            "                    words.lang_id AS lang_id,  \n" +
+            "                    languages.id AS l_id,  \n" +
+            "                    languages.name AS l_name \n" +
+            "                    FROM users \n" +
+            "                    INNER JOIN games ON users.id = games.user_id \n" +
+            "                    INNER JOIN steps ON games.id = steps.game_id \n" +
+            "                    INNER JOIN words ON steps.word_question_id = words.id \n" +
+            "                    INNER JOIN languages ON words.lang_id = languages.id \n" +
+            "                    WHERE users.id = :userId AND steps.time_give IS NOT NULL AND steps.time_received IS NOT NULL) as a \n" +
+            "            GROUP BY id, name, lang_id, l_id, l_name \n" +
+            "            ORDER BY avg \n" +
+            "            LIMIT :limit")
     public List<Word> getWordsGuessedAboveThresholdByUserId(@Param("userId") Long userId,
                                                             @Param("limit") int limit);
 
