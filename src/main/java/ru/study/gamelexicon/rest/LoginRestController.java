@@ -12,9 +12,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.study.gamelexicon.model.Game;
+import ru.study.gamelexicon.model.Language;
 import ru.study.gamelexicon.model.User;
 import ru.study.gamelexicon.service.GameService;
+import ru.study.gamelexicon.service.LanguageService;
 import ru.study.gamelexicon.service.UserService;
 
 import javax.servlet.ServletException;
@@ -31,15 +32,18 @@ public class LoginRestController {
     @Autowired
     GameService gameService;
 
+    @Autowired
+    LanguageService languageService;
+
     private static final Logger logger = LoggerFactory.getLogger(LoginRestController.class);
 
     @GetMapping("/")
-    public ResponseEntity<Game> empty() {
+    public ResponseEntity<Language> empty() {
 
         /*User user = userService.getById(3L);
         Game game = new Game();
         gameService.save(game, user);*/
-        return new ResponseEntity<Game>(gameService.getById(20L), HttpStatus.OK);
+        return new ResponseEntity<Language>(languageService.getById(2L), HttpStatus.OK);
     }
 
     @PostMapping("/registration")

@@ -1,11 +1,9 @@
-package ru.study.gamelexicon.gamelexicon;
+package ru.study.gamelexicon;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.study.gamelexicon.dao.GameDao;
@@ -20,10 +18,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({ TranslationService.class , WordDao.class, GameDao.class, LanguageDao.class})
+@RunWith(MockitoJUnitRunner.class)
+//@PrepareForTest({ TranslationService.class , WordDao.class, GameDao.class, LanguageDao.class})
 public class GameTest {
     private GameServiceImpl gameService;
     private SettingServiceImpl settingService;
@@ -38,10 +37,16 @@ public class GameTest {
     public void init(){
         gameService = new GameServiceImpl();
         settingService = new SettingServiceImpl();
-        mockTranslationService = PowerMockito.mock(TranslationService.class);
+        /*mockTranslationService = PowerMockito.mock(TranslationService.class);
         mockWordDao = PowerMockito.mock(WordDao.class);
         mockGameDao = PowerMockito.mock(GameDao.class);
-        mockLanguageDao = PowerMockito.mock(LanguageDao.class);
+        mockLanguageDao = PowerMockito.mock(LanguageDao.class);*/
+
+        mockTranslationService = mock(TranslationService.class);
+        mockWordDao = mock(WordDao.class);
+        mockGameDao = mock(GameDao.class);
+        mockLanguageDao = mock(LanguageDao.class);
+
         gameService.setSettingService(settingService);
         gameService.setTranslationService(mockTranslationService);
         gameService.setWordDao(mockWordDao);
@@ -78,6 +83,13 @@ public class GameTest {
         assertNull(game.getUser());
         assertNotNull(game.getLangWordQuestion());
         assertNotNull(game.getLangWordAnswer());
+    }
+
+    @Test
+    public void test(){
+        User user = new User();
+        user.setLastName("test");
+        user.setFirstName("test");
     }
 
     private User getUser(){

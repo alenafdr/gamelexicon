@@ -6,6 +6,7 @@ import ru.study.gamelexicon.rest.json.JacksonLanguageDeserializer;
 import ru.study.gamelexicon.rest.json.JacksonLanguageSerializer;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 
 @Entity
@@ -50,5 +51,19 @@ public class Language {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Language language = (Language) o;
+        return Objects.equals(name, language.name);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(name);
     }
 }

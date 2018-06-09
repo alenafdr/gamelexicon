@@ -1,4 +1,4 @@
-package ru.study.gamelexicon.gamelexicon;
+package ru.study.gamelexicon;
 
 import org.junit.Before;
 import org.junit.Test;
