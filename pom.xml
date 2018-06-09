@@ -117,6 +117,7 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>cobertura-maven-plugin</artifactId>
 				<version>2.5.1</version>
+
 			</plugin>
 		</plugins>
 	</reporting>
@@ -140,11 +141,12 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>cobertura-maven-plugin</artifactId>
-				<version>2.5.1</version><!--версия обязательная для CI-->
+				<version>2.5.1</version>
 				<configuration>
 					<check></check>
 					<formats>
-						<format>xml</format><!--формат обязателен для CI-->
+						<format>html</format>
+						<format>xml</format>
 					</formats>
 					<instrumentation>
 						<includes>
@@ -152,7 +154,7 @@
 						</includes>
 					</instrumentation>
 				</configuration>
-				<executions><!--обязателен для CI-->
+				<executions>
 					<execution>
 						<phase>package</phase>
 						<goals>
