@@ -147,12 +147,19 @@ Maven 3.5.0
 Junit 4.12   
 Mockito 1.10.19  
 PowerMock 1.6.4  
-Cobertura 2.1.1   
 
 ## Мониторинг статистики
-Мониторинг статистики настроен с помощью Grafana. Запрос делается непосрдетсвенно в базу данных. Настройки можно импортировать из папки src/main/resources/grafana. На данный момент настрона следующая статистка  
-скрины
+Мониторинг статистики настроен с помощью Grafana. Запрос делается непосредственно в базу данных.  
+![](https://github.com/alenafdr/gamelexicon/blob/master/src/main/resources/screenshots/setting_data_sources.png)  
+Настройки можно импортировать из папки src/main/resources/grafana. На данный момент настрона следующая статистика   
+
+![](https://github.com/alenafdr/gamelexicon/blob/master/src/main/resources/screenshots/list.png)  
+### Users  
+![](https://github.com/alenafdr/gamelexicon/blob/master/src/main/resources/screenshots/users.png)
+### Words
+![](https://github.com/alenafdr/gamelexicon/blob/master/src/main/resources/screenshots/words.png)  
+### Games
+![](https://github.com/alenafdr/gamelexicon/blob/master/src/main/resources/screenshots/games.png)  
 
 ## Система сборки
 Для сброки проекта был использован Jenkins  
-скрины
