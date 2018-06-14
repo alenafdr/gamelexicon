@@ -134,7 +134,7 @@ api/steps/
 
 ## Детальное описание API 
 
-ссылка
+[Документация](https://github.com/alenafdr/gamelexicon/blob/master/documentation.md)
 
 ## Используемые технологии
 Java 8  
