@@ -11,10 +11,7 @@ import javax.persistence.*;
 @Table(name = "settings")
 @JsonSerialize(using = JacksonSettingSerializer.class)
 @JsonDeserialize(using = JacksonSettingDeserializer.class)
-public class Setting {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Setting extends BaseEntity{
 
     @ManyToOne
     @JoinColumn(name="lang_question_id", foreignKey = @ForeignKey(name = "lang_question_id_settings"), nullable = true)
@@ -42,14 +39,6 @@ public class Setting {
         this.amountSteps = amountSteps;
         this.secForAnswer = secForAnswer;
         this.amountRepeat = amountRepeat;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Language getLangQuestion() {

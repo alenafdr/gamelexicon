@@ -40,7 +40,7 @@ public class LanguageRestController {
         }
 
         this.languageService.save(language);
-        logger.info("Created game", language);
+        logger.info("Created language", language);
         return new ResponseEntity<>(language, HttpStatus.CREATED);
     }
 
@@ -67,7 +67,7 @@ public class LanguageRestController {
 
         this.languageService.update(language);
 
-        logger.info("Updated game", language);
+        logger.info("Updated language", language);
         return new ResponseEntity<>(language, HttpStatus.OK);
     }
 
@@ -81,7 +81,7 @@ public class LanguageRestController {
 
         this.languageService.remove(langId);
 
-        logger.info("Removed game", language);
+        logger.info("Removed language", language);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

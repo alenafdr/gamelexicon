@@ -13,13 +13,7 @@ import java.util.Objects;
 @Table(name = "words")
 @JsonSerialize(using = JacksonWordSerializer.class)
 @JsonDeserialize(using = JacksonWordDeserializer.class)
-public class Word {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name = "name")
-    private String name;
+public class Word extends NamedEntity{
 
     @ManyToOne(optional = false)
     @JoinColumn(name="lang_id", foreignKey = @ForeignKey(name = "lang_id_word"))
@@ -29,24 +23,8 @@ public class Word {
     }
 
     public Word(String name, Language lang) {
-        this.name = name;
+        super(name);
         this.lang = lang;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public Language getLang() {
@@ -61,7 +39,7 @@ public class Word {
     public String toString() {
         return "Word{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", name='" + super.getName() + '\'' +
                 ", lang=" + lang +
                 '}';
     }
@@ -72,7 +50,7 @@ public class Word {
         if (o == null || getClass() != o.getClass()) return false;
         Word word = (Word) o;
         return Objects.equals(id, word.id) &&
-                Objects.equals(name, word.name);
+                Objects.equals(super.getName(), word.getName());
     }
 
     @Override

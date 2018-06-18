@@ -13,43 +13,20 @@ import java.util.Objects;
 @Table(name = "languages")
 @JsonSerialize(using = JacksonLanguageSerializer.class)
 @JsonDeserialize(using = JacksonLanguageDeserializer.class)
-public class Language {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name = "name")
-    private String name;
+public class Language extends NamedEntity{
 
     public Language() {
     }
 
     public Language(String name) {
-        this.name = name;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+        super(name);
     }
 
     @Override
     public String toString() {
         return "Language{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", name='" + super.getName() + '\'' +
                 '}';
     }
 
@@ -58,12 +35,12 @@ public class Language {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Language language = (Language) o;
-        return Objects.equals(name, language.name);
+        return Objects.equals(super.getName(), language.getName());
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(name);
+        return Objects.hash(super.getName());
     }
 }

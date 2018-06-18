@@ -13,10 +13,7 @@ import java.util.Set;
 @Table(name = "games")
 @JsonSerialize(using = JacksonGameSerializer.class)
 @JsonDeserialize(using = JacksonGameDeserializer.class)
-public class Game {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Game extends BaseEntity{
 
     @ManyToOne
     @JoinColumn(name="user_id", nullable = true)
@@ -32,14 +29,6 @@ public class Game {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "game", fetch = FetchType.EAGER)
     private Set<Step> steps;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public User getUser() {
         return user;

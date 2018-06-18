@@ -7,11 +7,7 @@ import java.util.stream.Stream;
 
 @Entity
 @Table(name = "translations")
-public class Translation {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Translation extends BaseEntity{
 
     @OneToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     @JoinColumn(name = "id_word_origin")
@@ -21,14 +17,6 @@ public class Translation {
     @JoinTable(name = "word_origin_translation", joinColumns = @JoinColumn(name = "origin_id"),
             inverseJoinColumns = @JoinColumn(name = "translation_id"))
     private Set<Word> translations;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Word getOrigin() {
         return origin;

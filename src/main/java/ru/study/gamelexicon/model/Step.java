@@ -16,11 +16,7 @@ import java.util.List;
 @Table(name = "steps")
 @JsonSerialize(using = JacksonStepSerializer.class)
 @JsonDeserialize(using = JacksonStepDeserializer.class)
-public class Step {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Step extends BaseEntity{
 
     @ManyToOne(optional = false)
     @JoinColumn(name="game_id", foreignKey = @ForeignKey(name = "game_id_step"))
@@ -74,16 +70,6 @@ public class Step {
     private Word answer;
 
     public Step() {
-    }
-
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Game getGame() {

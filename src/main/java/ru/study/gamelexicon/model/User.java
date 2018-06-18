@@ -13,11 +13,7 @@ import java.util.Set;
 @Table(name = "users")
 @JsonSerialize(using = JacksonUserSerializer.class)
 @JsonDeserialize(using = JacksonUserDeserializer.class)
-public class User {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class User extends BaseEntity{
 
     @Column(name = "email")
     private String email;
@@ -54,14 +50,6 @@ public class User {
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getEmail() {

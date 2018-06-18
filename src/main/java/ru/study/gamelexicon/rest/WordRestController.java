@@ -51,7 +51,6 @@ public class WordRestController {
         }
 
         this.wordService.save(word);
-        logger.info("Word created", word);
         return new ResponseEntity<>(word, HttpStatus.CREATED);
     }
 
@@ -77,7 +76,6 @@ public class WordRestController {
         }
 
         this.wordService.update(word);
-        logger.info("Word updated", word);
         return new ResponseEntity<>(word, HttpStatus.OK);
     }
 
